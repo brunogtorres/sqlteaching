@@ -127,7 +127,7 @@ $('#sql-input').keypress(function(event) {
  *  - required:             Extra validation in the form of case-insensitive required strings
  *  - custom_error_message: If the validation fails, show this error message to the user
  */
-var levels = [{'name': 'SELECT *',
+var levels = [{'name': 'SELECT * TESTE',
                'short_name': 'select',
                'database_type': 'carro',
                'answer': {'columns': ['id', 'Modelo', 'Cor', 'Ano'],
