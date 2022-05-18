@@ -129,11 +129,11 @@ $('#sql-input').keypress(function(event) {
  */
 var levels = [{'name': 'SELECT *',
                'short_name': 'select',
-               'database_type': 'family',
-               'answer': {'columns': ['id', 'name', 'gender', 'species', 'num_books_read'],
-                          'values': [[1, 'Dave', 'male', 'human', 200],
-                                     [2, 'Mary', 'female', 'human', 180],
-                                     [3, 'Pickles', 'male', 'dog', 0]]},
+               'database_type': 'carro',
+               'answer': {'columns': ['id', 'Modelo', 'Cor', 'Ano'],
+                          'values': [[1, 'Gol', 'Azul', 2022],
+                                     [2, 'Mary', 'female', 180],
+                                     [3, 'Pickles', 'male', 0]]},
                'prompt': 'In SQL, data is usually organized in various tables. For example, a sports team database might have the tables <em>teams</em>, <em>players</em>, and <em>games</em>. A wedding database might have tables <em>guests</em>, <em>vendors</em>, and <em>music_playlist</em>.<br/><br/>Imagine we have a table that stores family members with each member\'s name, species, gender, and number of books read.<br/><br/>Let\'s start by grabbing all of the data in one table.  We have a table called <strong>family_members</strong> that is shown below.  In order to grab all of that data, please run the following command: <code>SELECT * FROM family_members;</code><br/><br/>The <code>*</code> above means that all of the columns will be returned, which in this case are <em>id</em>, <em>name</em>, <em>gender</em>, <em>species</em>, and <em>num_books_read</em>. <br/><br/>Note: This tutorial uses the <a href="http://en.wikipedia.org/wiki/SQLite" target="_blank">SQLite</a> database engine.  The different variants of SQL use slightly different syntax.'},
 
               {'name': 'SELECT specific columns',
@@ -418,6 +418,13 @@ var load_database = function(db_type) {
   var database, sqlstr, table_names;
   database = new sql.Database();
   switch (db_type) {
+    case 'carro':
+      sqlstr = "CREATE TABLE carro (id int, Modelo, Cor, Ano);";
+      sqlstr += "INSERT INTO carro VALUES (1, 'Gol', 'Azul', 2022);";
+      sqlstr += "INSERT INTO carro VALUES (2, 'Mary', 'female', 180);";
+      sqlstr += "INSERT INTO carro VALUES (3, 'Pickles', 'male', 0);";
+      table_names = ['carro'];
+      break;
     case 'family':
       sqlstr = "CREATE TABLE family_members (id int, name char, gender char, species char, num_books_read int);";
       sqlstr += "INSERT INTO family_members VALUES (1, 'Dave', 'male', 'human', 200);";
