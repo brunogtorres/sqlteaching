@@ -36,11 +36,11 @@ var grade_results = function(results, correct_answer) {
 
 var show_is_correct = function(is_correct, custom_error_message) {
   if (is_correct) {
-    is_correct_html = 'Congrats!  That is correct!<br/>';
+    is_correct_html = 'Parabéns! Está correto<br/>';
     if (current_level < levels.length) {
-      is_correct_html += '<a href="#!' + levels[current_level]['short_name'] + '" tabindex="3">Next Lesson</a>';
+      is_correct_html += '<a href="#!' + levels[current_level]['short_name'] + '" tabindex="3">Próxima Lição</a>';
     } else {
-      is_correct_html += 'That is currently the end of the tutorial.  Please check back later for more!';
+      is_correct_html += 'Esse é o fim do Tutorial';
     }
     $('#answer-correct').html(is_correct_html);
     $('#answer-correct').show();
@@ -88,12 +88,12 @@ var execute_query = function() {
           show_is_correct(false, cur_level['custom_error_message']);
         }
       } else {
-        show_is_correct(false, 'The query you have entered did not return the proper results.  Please try again.');
+        show_is_correct(false, 'A consulta que você fez não apresentou um resultado correto. Tente novamente.');
       }
     }
   } catch (err) {
     $('#results').html('');
-    show_is_correct(false, 'The query you have entered is not valid.  Please try again.');
+    show_is_correct(false, 'A consulta que você fez não é válida. Tente novamente.');
   }
   $('.expected-results-container').show();
   $('#expected-results').html(table_from_results([correct_answer]));
@@ -127,13 +127,12 @@ $('#sql-input').keypress(function(event) {
  *  - required:             Extra validation in the form of case-insensitive required strings
  *  - custom_error_message: If the validation fails, show this error message to the user
  */
-var levels = [{'name': 'SELECT *',
+var levels = [{'name': 'SELECT',
                'short_name': 'select',
                'database_type': 'carro',
-               'answer': {'columns': ['id', 'Modelo', 'Cor', 'Ano'],
-                          'values': [[1, 'Gol', 'Azul', 2022],
-                                     [2, 'Mary', 'female', 180],
-                                     [3, 'Pickles', 'male', 0]]},
+               'answer': {'columns': ['Placa'],
+                          'values': [['LLL000'],
+                                     ['LXZ3333']]},
                'prompt': 'In SQL, data is usually organized in various tables. For example, a sports team database might have the tables <em>teams</em>, <em>players</em>, and <em>games</em>. A wedding database might have tables <em>guests</em>, <em>vendors</em>, and <em>music_playlist</em>.<br/><br/>Imagine we have a table that stores family members with each member\'s name, species, gender, and number of books read.<br/><br/>Let\'s start by grabbing all of the data in one table.  We have a table called <strong>family_members</strong> that is shown below.  In order to grab all of that data, please run the following command: <code>SELECT * FROM family_members;</code><br/><br/>The <code>*</code> above means that all of the columns will be returned, which in this case are <em>id</em>, <em>name</em>, <em>gender</em>, <em>species</em>, and <em>num_books_read</em>. <br/><br/>Note: This tutorial uses the <a href="http://en.wikipedia.org/wiki/SQLite" target="_blank">SQLite</a> database engine.  The different variants of SQL use slightly different syntax.'},
 
               {'name': 'SELECT colunas específicas',
@@ -419,10 +418,11 @@ var load_database = function(db_type) {
   database = new sql.Database();
   switch (db_type) {
     case 'carro':
-      sqlstr = "CREATE TABLE carro (id int, Modelo, Cor, Ano);";
-      sqlstr += "INSERT INTO carro VALUES (1, 'Gol', 'Azul', 2022);";
-      sqlstr += "INSERT INTO carro VALUES (2, 'Mary', 'female', 180);";
-      sqlstr += "INSERT INTO carro VALUES (3, 'Pickles', 'male', 0);";
+      sqlstr = "CREATE TABLE carro (Placa, Modelo, Ano, Cor);";
+      sqlstr += "INSERT INTO carro VALUES ('LLL000', 'Palio', 2015, 'Prata');";
+      sqlstr += "INSERT INTO carro VALUES ('LKY1111', 'Punto', 2019, 'Cinza');";
+      sqlstr += "INSERT INTO carro VALUES ('LMN2222', 'Meriva', 2017, 'Branco');";
+      sqlstr += "INSERT INTO carro VALUES ('LXZ3333', 'Palio', 2017, 'Preto');";
       table_names = ['carro'];
       break;
     case 'family':
