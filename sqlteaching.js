@@ -138,12 +138,31 @@ var levels = [{'name': 'SELECT',
               {'name': 'SELECT colunas específicas',
                'short_name': 'select_columns',
                'database_type': 'carro',
-               'answer': {'columns': ['Modelo', 'Ano'],
-                          'values': [['Gol', 2022],
-                                     ['Mary', 180],
-                                     ['Pickles', 0]]},
+               'answer': {'columns': ['Placa', 'Cor', 'Modelo'],
+                          'values': [['LLL0000', 'Prata', 'Palio'],
+                                     ['LXZ3333', 'Preto', 'Palio']]},
                'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'},
 
+              {'name': 'SELECT *',
+               'short_name': 'select_columns',
+               'database_type': 'carro',
+               'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
+                          'values': [['LLL000', 'Palio', 2015, 'Prata'],
+                                     ['LKY1111', 'Punto', 2019, 'Cinza'],
+                                     ['LMN2222', 'Meriva', 2017, 'Branco'],
+                                     ['LXZ3333', 'Palio', 2017, 'Preto']]},
+               'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'}
+              
+              {'name': 'SELECT TEL',
+               'short_name': 'select_columns',
+               'database_type': 'carro',
+               'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
+                          'values': [['LLL000', 'Palio', 2015, 'Prata'],
+                                     ['LKY1111', 'Punto', 2019, 'Cinza'],
+                                     ['LMN2222', 'Meriva', 2017, 'Branco'],
+                                     ['LXZ3333', 'Palio', 2017, 'Preto']]},
+               'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'}
+              
               {'name': 'WHERE ... Equals',
                'short_name': 'where_equals',
                'database_type': 'family',
@@ -425,23 +444,21 @@ var load_database = function(db_type) {
       sqlstr += "INSERT INTO carro VALUES ('LXZ3333', 'Palio', 2017, 'Preto');";
       table_names = ['carro'];
       break;
-    case 'family':
-      sqlstr = "CREATE TABLE family_members (id int, name char, gender char, species char, num_books_read int);";
-      sqlstr += "INSERT INTO family_members VALUES (1, 'Dave', 'male', 'human', 200);";
-      sqlstr += "INSERT INTO family_members VALUES (2, 'Mary', 'female', 'human', 180);";
-      sqlstr += "INSERT INTO family_members VALUES (3, 'Pickles', 'male', 'dog', 0);";
-      table_names = ['family_members'];
+    case 'cliente':
+      sqlstr = "CREATE TABLE family_members (IDCliente, Nome, Telefone);";
+      sqlstr += "INSERT INTO family_members VALUES (1, 'Roberta', 26260000);";
+      sqlstr += "INSERT INTO family_members VALUES (2, 'André', 26101111);";
+      sqlstr += "INSERT INTO family_members VALUES (3, 'Joana', 26215850);";
+      sqlstr += "INSERT INTO family_members VALUES (4, 'Paulo', 26119620);";
+      table_names = ['cliente'];
       break;
-    case 'friends_of_pickles':
-      sqlstr = "CREATE TABLE friends_of_pickles (id int, name char, gender char, species char, height_cm int);";
-      sqlstr += "INSERT INTO friends_of_pickles VALUES (1, 'Dave', 'male', 'human', 180);";
-      sqlstr += "INSERT INTO friends_of_pickles VALUES (2, 'Mary', 'female', 'human', 160);";
-      sqlstr += "INSERT INTO friends_of_pickles VALUES (3, 'Fry', 'male', 'cat', 30);";
-      sqlstr += "INSERT INTO friends_of_pickles VALUES (4, 'Leela', 'female', 'cat', 25);";
-      sqlstr += "INSERT INTO friends_of_pickles VALUES (5, 'Odie', 'male', 'dog', 40);";
-      sqlstr += "INSERT INTO friends_of_pickles VALUES (6, 'Jumpy', 'male', 'dog', 35);";
-      sqlstr += "INSERT INTO friends_of_pickles VALUES (7, 'Sneakers', 'male', 'dog', 55);";
-      table_names = ['friends_of_pickles'];
+    case 'venda':
+      sqlstr = "CREATE TABLE carro (IDCliente, Placa, Data, Valor);";
+      sqlstr += "INSERT INTO carro VALUES (2, 'LKY1111', '2021-10-01', 45000);";
+      sqlstr += "INSERT INTO carro VALUES (4, 'LXZ3333', '2021-10-01', 43000);";
+      sqlstr += "INSERT INTO carro VALUES (1, 'LLLOOOO', '2021-10-02', 35000);";
+      sqlstr += "INSERT INTO carro VALUES (2, 'LMN2222', '2021-10-02', 50000);";
+      table_names = ['venda'];
       break;
     case 'family_and_legs':
       sqlstr = "CREATE TABLE family_members (id int, name char, species char, num_books_read int, num_legs int);";
