@@ -127,7 +127,7 @@ $('#sql-input').keypress(function(event) {
  *  - required:             Extra validation in the form of case-insensitive required strings
  *  - custom_error_message: If the validation fails, show this error message to the user
  */
-var levels = [{'name': 'SELECT * TESTE',
+var levels = [{'name': 'SELECT *',
                'short_name': 'select',
                'database_type': 'carro',
                'answer': {'columns': ['id', 'Modelo', 'Cor', 'Ano'],
@@ -136,13 +136,13 @@ var levels = [{'name': 'SELECT * TESTE',
                                      [3, 'Pickles', 'male', 0]]},
                'prompt': 'In SQL, data is usually organized in various tables. For example, a sports team database might have the tables <em>teams</em>, <em>players</em>, and <em>games</em>. A wedding database might have tables <em>guests</em>, <em>vendors</em>, and <em>music_playlist</em>.<br/><br/>Imagine we have a table that stores family members with each member\'s name, species, gender, and number of books read.<br/><br/>Let\'s start by grabbing all of the data in one table.  We have a table called <strong>family_members</strong> that is shown below.  In order to grab all of that data, please run the following command: <code>SELECT * FROM family_members;</code><br/><br/>The <code>*</code> above means that all of the columns will be returned, which in this case are <em>id</em>, <em>name</em>, <em>gender</em>, <em>species</em>, and <em>num_books_read</em>. <br/><br/>Note: This tutorial uses the <a href="http://en.wikipedia.org/wiki/SQLite" target="_blank">SQLite</a> database engine.  The different variants of SQL use slightly different syntax.'},
 
-              {'name': 'SELECT specific columns',
+              {'name': 'SELECT colunas específicas',
                'short_name': 'select_columns',
-               'database_type': 'family',
-               'answer': {'columns': ['name', 'species'],
-                          'values': [['Dave', 'human'],
-                                     ['Mary', 'human'],
-                                     ['Pickles', 'dog']]},
+               'database_type': 'carro',
+               'answer': {'columns': ['Modelo', 'Ano'],
+                          'values': [['Gol', 2022],
+                                     ['Mary', 180],
+                                     ['Pickles', 0]]},
                'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'},
 
               {'name': 'WHERE ... Equals',
