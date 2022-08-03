@@ -424,7 +424,7 @@ var load_database = function(db_type) {
   switch (db_type) {
     case 'carro':
       sqlstr = "CREATE TABLE carro (Placa, Modelo, Ano, Cor);";
-      sqlstr += "INSERT INTO carro VALUES ('LLL000', 'Palio', 2015, 'Prata');";
+      sqlstr += "INSERT INTO carro VALUES ('LLL0000', 'Palio', 2015, 'Prata');";
       sqlstr += "INSERT INTO carro VALUES ('LKY1111', 'Punto', 2019, 'Cinza');";
       sqlstr += "INSERT INTO carro VALUES ('LMN2222', 'Meriva', 2017, 'Branco');";
       sqlstr += "INSERT INTO carro VALUES ('LXZ3333', 'Palio', 2017, 'Preto');";
