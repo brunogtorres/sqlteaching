@@ -144,7 +144,7 @@ var levels = [{'name': 'SELECT',
                'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'},
 
               {'name': 'SELECT *',
-               'short_name': 'select_columns',
+               'short_name': 'select_all',
                'database_type': 'carro',
                'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
                           'values': [['LLL000', 'Palio', 2015, 'Prata'],
@@ -154,7 +154,7 @@ var levels = [{'name': 'SELECT',
                'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'}
               
               {'name': 'SELECT TEL',
-               'short_name': 'select_columns',
+               'short_name': 'select_tel',
                'database_type': 'carro',
                'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
                           'values': [['LLL000', 'Palio', 2015, 'Prata'],
