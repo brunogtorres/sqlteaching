@@ -155,7 +155,7 @@ var levels = [{'name': 'SELECT',
 
               {'name': 'SELECT TEL',
                'short_name': 'telefone',
-               'database_type': 'cliente',
+               'database_type': 'carro',
                'answer': {'columns': ['Telefone'],
                           'values': [[26215850]]},
                'prompt': 'In the <code>WHERE</code> part of a query, you can search for multiple attributes by using the <code>AND</code> keyword.  For example, if you wanted to find the friends of Pickles that are over 25cm in height and are cats, you would run: <br/><code>SELECT * FROM friends_of_pickles WHERE height_cm > 25 AND species = \'cat\';</code><br/><br/>Can you find all of Pickles\' friends that are dogs and under the height of 45cm?'},
