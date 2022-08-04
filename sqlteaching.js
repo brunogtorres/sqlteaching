@@ -73,7 +73,7 @@ var execute_query = function() {
     var results = db.exec($('#sql-input').val());
     if (results.length == 0) {
       $('#results').html('');
-      show_is_correct(false, 'The query you have entered did not return any results.  Please try again.');
+      show_is_correct(false, 'A consulta não apresentou nenhum resultado. Tente novamente.');
     } else {
       $('#results').html(table_from_results(results));
       var is_correct = grade_results(results, correct_answer);
@@ -153,12 +153,11 @@ var levels = [{'name': 'SELECT',
                                      ['LXZ3333', 'Palio', 2017, 'Preto']]},
                'prompt': 'SQL accepts various inequality symbols, including: <br/><code>=</code> "equal to"<br/><code>></code> "greater than"<br/><code><</code> "less than"<br/><code>>=</code> "greater than or equal to"<br/><code><=</code> "less than or equal to"<br/><br/> Can you return all rows in <strong>family_members</strong> where num_books_read is a value greater or equal to 180?'},
 
-              {'name': 'AND',
-               'short_name': 'and',
-               'database_type': 'friends_of_pickles',
-               'answer': {'columns': ['id', 'name', 'gender', 'species', 'height_cm'],
-                          'values': [[5, 'Odie', 'male', 'dog', 40],
-                                     [6, 'Jumpy', 'male', 'dog', 35]]},
+              {'name': 'SELECT TEL',
+               'short_name': 'select_tel',
+               'database_type': 'cliente',
+               'answer': {'columns': ['Telefone'],
+                          'values': [[26215850]]},
                'prompt': 'In the <code>WHERE</code> part of a query, you can search for multiple attributes by using the <code>AND</code> keyword.  For example, if you wanted to find the friends of Pickles that are over 25cm in height and are cats, you would run: <br/><code>SELECT * FROM friends_of_pickles WHERE height_cm > 25 AND species = \'cat\';</code><br/><br/>Can you find all of Pickles\' friends that are dogs and under the height of 45cm?'},
 
               {'name': 'OR',
