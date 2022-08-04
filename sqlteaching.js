@@ -50,7 +50,7 @@ var show_is_correct = function(is_correct, custom_error_message) {
     $('#answer-wrong').show();
     $('#answer-correct').hide();
   } else {
-    $('#answer-wrong').text('That was incorrect.  Please try again.');
+    $('#answer-wrong').text('Errado. Tente novamente.');
     $('#answer-wrong').show();
     $('#answer-correct').hide();
   }
@@ -433,7 +433,7 @@ var load_level = function() {
   var database = load_database(levels[current_level-1]['database_type']);
   // Set text for current level
   lesson_name = levels[current_level-1]['name'];
-  $('#lesson-name').text("Lesson " + current_level + ": " + lesson_name);
+  $('#lesson-name').text("Lição " + current_level + ": " + lesson_name);
   $('#prompt').html(levels[current_level-1]['prompt']);
 
   // Add "next" and "previous" links if it makes sense.
