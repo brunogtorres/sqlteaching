@@ -160,9 +160,9 @@ var levels = [{'name': 'SELECT',
                           'values': [[26215850]]},
                'prompt': 'In the <code>WHERE</code> part of a query, you can search for multiple attributes by using the <code>AND</code> keyword.  For example, if you wanted to find the friends of Pickles that are over 25cm in height and are cats, you would run: <br/><code>SELECT * FROM friends_of_pickles WHERE height_cm > 25 AND species = \'cat\';</code><br/><br/>Can you find all of Pickles\' friends that are dogs and under the height of 45cm?'},
 
-              {'name': 'OR',
-               'short_name': 'or',
-               'database_type': 'friends_of_pickles',
+              {'name': 'INNER JOIN',
+               'short_name': 'innerjoin',
+               'database_type': 'vendacarros',
                'answer': {'columns': ['id', 'name', 'gender', 'species', 'height_cm'],
                           'values': [[3, 'Fry', 'male', 'cat', 30],
                                      [4, 'Leela', 'female', 'cat', 25],
@@ -426,6 +426,24 @@ var load_database = function(db_type) {
       sqlstr += "INSERT INTO venda VALUES (1, 'LLLOOOO', '2021-10-02', 35000);";
       sqlstr += "INSERT INTO venda VALUES (2, 'LMN2222', '2021-10-02', 50000);";
       table_names = ['venda'];
+      break;
+      case 'vendacarros':
+      sqlstr = "CREATE TABLE carro (Placa, Modelo, Ano, Cor);";
+      sqlstr += "INSERT INTO carro VALUES ('LLL0000', 'Palio', 2015, 'Prata');";
+      sqlstr += "INSERT INTO carro VALUES ('LKY1111', 'Punto', 2019, 'Cinza');";
+      sqlstr += "INSERT INTO carro VALUES ('LMN2222', 'Meriva', 2017, 'Branco');";
+      sqlstr += "INSERT INTO carro VALUES ('LXZ3333', 'Palio', 2017, 'Preto');";
+      sqlstr = "CREATE TABLE cliente (IDCliente, Nome, Telefone);";
+      sqlstr += "INSERT INTO cliente VALUES (1, 'Roberta', 26260000);";
+      sqlstr += "INSERT INTO cliente VALUES (2, 'André', 26101111);";
+      sqlstr += "INSERT INTO cliente VALUES (3, 'Joana', 26215850);";
+      sqlstr += "INSERT INTO cliente VALUES (4, 'Paulo', 26119620);";
+      sqlstr = "CREATE TABLE venda (IDCliente, Placa, Data, Valor);";
+      sqlstr += "INSERT INTO venda VALUES (2, 'LKY1111', '2021-10-01', 45000);";
+      sqlstr += "INSERT INTO venda VALUES (4, 'LXZ3333', '2021-10-01', 43000);";
+      sqlstr += "INSERT INTO venda VALUES (1, 'LLLOOOO', '2021-10-02', 35000);";
+      sqlstr += "INSERT INTO venda VALUES (2, 'LMN2222', '2021-10-02', 50000);";
+      table_names = ['carro', 'cliente', 'venda'];
       break;
     case 'family_and_legs':
       sqlstr = "CREATE TABLE family_members (id int, name char, species char, num_books_read int, num_legs int);";
