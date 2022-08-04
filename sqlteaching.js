@@ -142,28 +142,8 @@ var levels = [{'name': 'SELECT',
                           'values': [['LLL0000', 'Prata', 'Palio'],
                                      ['LXZ3333', 'Preto', 'Palio']]},
                'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'},
-              
-               {'name': 'SELECT *',
-               'short_name': 'select_all',
-               'database_type': 'carro',
-               'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
-                          'values': [['LLL0000', 'Palio', 2015, 'Prata'],
-                                     ['LKY1111', 'Punto', 2019, 'Cinza'],
-                                     ['LMN2222', 'Meriva', 2017, 'Branco'],
-                                     ['LXZ3333', 'Palio', 2017, 'Preto']]},
-               'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'}
-              
-              {'name': 'SELECT TEL',
-               'short_name': 'select_tel',
-               'database_type': 'carro',
-               'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
-                          'values': [['LLL0000', 'Palio', 2015, 'Prata'],
-                                     ['LKY1111', 'Punto', 2019, 'Cinza'],
-                                     ['LMN2222', 'Meriva', 2017, 'Branco'],
-                                     ['LXZ3333', 'Palio', 2017, 'Preto']]},
-               'prompt': '<code>SELECT *</code> grabs all fields (called columns) in a table. If we only wanted to see the name and num_books_read columns, we would type<br/> <code>SELECT name, num_books_read FROM family_members;</code>.<br/><br/>Can you return just the name and species columns?'}
-              
-              {'name': 'WHERE ... Greater than or equal',
+             
+              {'name': 'SELECT *',
                'short_name': 'where_greater_than_or_equal',
                'database_type': 'family',
                'answer': {'columns': ['id', 'name', 'gender', 'species', 'num_books_read'],
