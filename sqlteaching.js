@@ -129,7 +129,7 @@ $('#sql-input').keypress(function(event) {
  */
 var levels = [{'name': 'SELECT',
                'short_name': 'select',
-               'database_type': 'carro',
+               'database_type': 'vendacarros',
                'answer': {'columns': ['Placa'],
                           'values': [['LLL0000'],
                                      ['LXZ3333']]},
@@ -137,7 +137,7 @@ var levels = [{'name': 'SELECT',
 
               {'name': 'SELECT colunas específicas',
                'short_name': 'select_columns',
-               'database_type': 'carro',
+               'database_type': 'vendacarros',
                'answer': {'columns': ['Placa', 'Cor', 'Modelo'],
                           'values': [['LLL0000', 'Prata', 'Palio'],
                                      ['LXZ3333', 'Preto', 'Palio']]},
@@ -145,7 +145,7 @@ var levels = [{'name': 'SELECT',
              
               {'name': 'SELECT *',
                'short_name': 'select_all',
-               'database_type': 'carro',
+               'database_type': 'vendacarros',
                'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
                           'values': [['LLL0000', 'Palio', 2015, 'Prata'],
                                      ['LKY1111', 'Punto', 2019, 'Cinza'],
@@ -155,20 +155,19 @@ var levels = [{'name': 'SELECT',
 
               {'name': 'SELECT TELEFONE',
                'short_name': 'telefone',
-               'database_type': 'cliente',
+               'database_type': 'vendacarros',
                'answer': {'columns': ['Telefone'],
                           'values': [[26215850]]},
                'prompt': 'In the <code>WHERE</code> part of a query, you can search for multiple attributes by using the <code>AND</code> keyword.  For example, if you wanted to find the friends of Pickles that are over 25cm in height and are cats, you would run: <br/><code>SELECT * FROM friends_of_pickles WHERE height_cm > 25 AND species = \'cat\';</code><br/><br/>Can you find all of Pickles\' friends that are dogs and under the height of 45cm?'},
 
-              {'name': 'INNER JOIN',
+              {'name': 'INNER',
                'short_name': 'innerjoin',
                'database_type': 'vendacarros',
-               'answer': {'columns': ['id', 'name', 'gender', 'species', 'height_cm'],
-                          'values': [[3, 'Fry', 'male', 'cat', 30],
-                                     [4, 'Leela', 'female', 'cat', 25],
-                                     [5, 'Odie', 'male', 'dog', 40],
-                                     [6, 'Jumpy', 'male', 'dog', 35],
-                                     [7, 'Sneakers', 'male', 'dog', 55]]},
+               'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor'],
+                          'values': [['LLL0000', 'Palio', 2015, 'Prata'],
+                                     ['LKY1111', 'Punto', 2019, 'Cinza'],
+                                     ['LMN2222', 'Meriva', 2017, 'Branco'],
+                                     ['LXZ3333', 'Palio', 2017, 'Preto']]},
                'prompt': 'In the <code>WHERE</code> part of a query, you can search for rows that match any of multiple attributes by using the <code>OR</code> keyword.  For example, if you wanted to find the friends of Pickles that are over 25cm in height or are cats, you would run: <br/><code>SELECT * FROM friends_of_pickles WHERE height_cm > 25 OR species = \'cat\';</code><br/><br/>Can you find all of Pickles\' friends that are dogs or under the height of 45cm?'},
 
               {'name': 'IN',
@@ -403,30 +402,6 @@ var load_database = function(db_type) {
   var database, sqlstr, table_names;
   database = new sql.Database();
   switch (db_type) {
-    case 'carro':
-      sqlstr = "CREATE TABLE carro (Placa, Modelo, Ano, Cor);";
-      sqlstr += "INSERT INTO carro VALUES ('LLL0000', 'Palio', 2015, 'Prata');";
-      sqlstr += "INSERT INTO carro VALUES ('LKY1111', 'Punto', 2019, 'Cinza');";
-      sqlstr += "INSERT INTO carro VALUES ('LMN2222', 'Meriva', 2017, 'Branco');";
-      sqlstr += "INSERT INTO carro VALUES ('LXZ3333', 'Palio', 2017, 'Preto');";
-      table_names = ['carro'];
-      break;
-    case 'cliente':
-      sqlstr = "CREATE TABLE cliente (IDCliente, Nome, Telefone);";
-      sqlstr += "INSERT INTO cliente VALUES (1, 'Roberta', 26260000);";
-      sqlstr += "INSERT INTO cliente VALUES (2, 'André', 26101111);";
-      sqlstr += "INSERT INTO cliente VALUES (3, 'Joana', 26215850);";
-      sqlstr += "INSERT INTO cliente VALUES (4, 'Paulo', 26119620);";
-      table_names = ['cliente'];
-      break;
-    case 'venda':
-      sqlstr = "CREATE TABLE venda (IDCliente, Placa, Data, Valor);";
-      sqlstr += "INSERT INTO venda VALUES (2, 'LKY1111', '2021-10-01', 45000);";
-      sqlstr += "INSERT INTO venda VALUES (4, 'LXZ3333', '2021-10-01', 43000);";
-      sqlstr += "INSERT INTO venda VALUES (1, 'LLLOOOO', '2021-10-02', 35000);";
-      sqlstr += "INSERT INTO venda VALUES (2, 'LMN2222', '2021-10-02', 50000);";
-      table_names = ['venda'];
-      break;
       case 'vendacarros':
       sqlstr = "CREATE TABLE carro (Placa, Modelo, Ano, Cor);";
       sqlstr += "INSERT INTO carro VALUES ('LLL0000', 'Palio', 2015, 'Prata');";
