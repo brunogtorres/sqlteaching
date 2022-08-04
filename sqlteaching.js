@@ -154,7 +154,7 @@ var levels = [{'name': 'SELECT',
                'prompt': 'SQL accepts various inequality symbols, including: <br/><code>=</code> "equal to"<br/><code>></code> "greater than"<br/><code><</code> "less than"<br/><code>>=</code> "greater than or equal to"<br/><code><=</code> "less than or equal to"<br/><br/> Can you return all rows in <strong>family_members</strong> where num_books_read is a value greater or equal to 180?'},
 
               {'name': 'SELECT TEL',
-               'short_name': 'select_tel',
+               'short_name': 'telefone',
                'database_type': 'cliente',
                'answer': {'columns': ['Telefone'],
                           'values': [[26215850]]},
