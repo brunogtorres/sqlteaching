@@ -160,7 +160,7 @@ var levels = [{'name': 'SELECT',
                           'values': [[26215850]]},
                'prompt': 'In the <code>WHERE</code> part of a query, you can search for multiple attributes by using the <code>AND</code> keyword.  For example, if you wanted to find the friends of Pickles that are over 25cm in height and are cats, you would run: <br/><code>SELECT * FROM friends_of_pickles WHERE height_cm > 25 AND species = \'cat\';</code><br/><br/>Can you find all of Pickles\' friends that are dogs and under the height of 45cm?'},
 
-              {'name': 'INNER',
+              {'name': 'INNER JOIN',
                'short_name': 'innerjoin',
                'database_type': 'vendacarros',
                'answer': {'columns': ['Placa', 'Modelo', 'Ano', 'Cor', 'IDCliente', 'Placa', 'Data', 'Valor'],
@@ -170,24 +170,23 @@ var levels = [{'name': 'SELECT',
                                      ['LXZ3333', 'Palio', 2017, 'Preto', 4, 'LXZ3333', '2021-10-01', 43000]]},
                'prompt': 'In the <code>WHERE</code> part of a query, you can search for rows that match any of multiple attributes by using the <code>OR</code> keyword.  For example, if you wanted to find the friends of Pickles that are over 25cm in height or are cats, you would run: <br/><code>SELECT * FROM friends_of_pickles WHERE height_cm > 25 OR species = \'cat\';</code><br/><br/>Can you find all of Pickles\' friends that are dogs or under the height of 45cm?'},
 
-              {'name': 'IN',
-               'short_name': 'in',
-               'database_type': 'friends_of_pickles',
-               'answer': {'columns': ['id', 'name', 'gender', 'species', 'height_cm'],
-                          'values': [[1, 'Dave', 'male', 'human', 180],
-                                     [2, 'Mary', 'female', 'human', 160]]},
+              {'name': 'INNER JOIN Palio Prata',
+               'short_name': 'palioprata',
+               'database_type': 'vendacarros',
+               'answer': {'columns': ['IDCliente'],
+                          'values': [[1]]},
                'prompt': 'Using the <code>WHERE</code> clause, we can find rows where a value is in a list of several possible values. <br/><br/><code>SELECT * FROM friends_of_pickles WHERE species IN (\'cat\', \'human\');</code> would return the <strong>friends_of_pickles</strong> that are either a cat or a human. <br/><br/>To find rows that are not in a list, you use <code>NOT IN</code> instead of <code>IN</code>. <br/><br/>Can you run a query that would return the rows that are <strong>not</strong> cats or dogs?'},
 
-              {'name': 'DISTINCT',
-               'short_name': 'distinct',
-               'database_type': 'friends_of_pickles',
-               'answer': {'columns': ['species'],
-                          'values': [['human'], ['dog']]},
+              {'name': 'INNER JOIN Telefone',
+               'short_name': 'innerjointelefone',
+               'database_type': 'vendacarros',
+               'answer': {'columns': ['IDCliente', 'Telefone'],
+                          'values': [[1, 26260000]]},
                'prompt': 'By putting <code>DISTINCT</code> after <code>SELECT</code>, you do not return duplicates. <br/><br/>For example, if you run <br/> <code>SELECT DISTINCT gender, species FROM friends_of_pickles WHERE height_cm < 100;</code>, you will get the gender/species combinations of the animals less than 100cm in height. <br/><br/>Note that even though there are multiple male dogs under that height, we only see one row that returns "male" and "dog".<br/><br/> Can you return a list of the distinct species of animals greater than 50cm in height?'},
 
               {'name': 'ORDER BY',
                'short_name': 'order_by',
-               'database_type': 'friends_of_pickles',
+               'database_type': 'locadora',
                'answer': {'columns': ['id', 'name', 'gender', 'species', 'height_cm'],
                           'values': [[1, 'Dave', 'male', 'human', 180],
                                      [2, 'Mary', 'female', 'human', 160],
@@ -420,12 +419,47 @@ var load_database = function(db_type) {
       sqlstr += "INSERT INTO venda VALUES (2, 'LMN2222', '2021-10-02', 50000);";
       table_names = ['carro', 'cliente', 'venda'];
       break;
-    case 'family_and_legs':
-      sqlstr = "CREATE TABLE family_members (id int, name char, species char, num_books_read int, num_legs int);";
-      sqlstr += "INSERT INTO family_members VALUES (1, 'Dave', 'human', 200, 2);";
-      sqlstr += "INSERT INTO family_members VALUES (2, 'Mary', 'human', 180, 2);";
-      sqlstr += "INSERT INTO family_members VALUES (3, 'Pickles', 'dog', 0, 4);";
-      table_names = ['family_members'];
+    case 'locadora':
+      sqlstr = "CREATE TABLE cliente (IDCliente, Nome, Telefone);";
+      sqlstr += "INSERT INTO cliente VALUES (1, 'Bruno Torres', 22222222);";
+      sqlstr += "INSERT INTO cliente VALUES (2, 'Monteiro Lobato', 33332222);";
+      sqlstr += "INSERT INTO cliente VALUES (3, 'Dias Gomes', 22223333);";
+      sqlstr += "INSERT INTO cliente VALUES (4, 'Machado de Assis', 22222220);";
+      sqlstr += "INSERT INTO cliente VALUES (5, 'Dias Gomes', 22222221);";
+      sqlstr += "CREATE TABLE DVD (IDDVD, DataAquisição, Estado, IDFilme);";
+      sqlstr += "INSERT INTO DVD VALUES (1, '2019-01-01', 'Ruim', 1);";
+      sqlstr += "INSERT INTO DVD VALUES (2, '2019-02-01', 'Bom', 3);";
+      sqlstr += "INSERT INTO DVD VALUES (3, '2019-04-03', 'Muito Bom', 3);";
+      sqlstr += "INSERT INTO DVD VALUES (4, '2020-06-06', 'Excelente', 2);";
+      sqlstr += "INSERT INTO DVD VALUES (5, '2020-01-01', 'Excelente', 5);";
+      sqlstr += "INSERT INTO DVD VALUES (6, '2020-06-20', 'Muito Bom', 6);";
+      sqlstr += "INSERT INTO DVD VALUES (7, '2020-08-28', 'Excelente', 4);";
+      sqlstr += "INSERT INTO DVD VALUES (8, '2019-04-03', 'Bom', 3);";
+      sqlstr += "INSERT INTO DVD VALUES (9, '2020-05-30', 'Bom', 4);";
+      sqlstr += "INSERT INTO DVD VALUES (10, '2020-06-20', 'Excelente', 7);";
+      sqlstr += "INSERT INTO DVD VALUES (11, '2020-06-20', 'Excelente', 8);";
+      sqlstr += "CREATE TABLE locação (IDDVD, IDCliente, DataLoc, DataVenc, DataDev, Valor);";
+      sqlstr += "INSERT INTO locação VALUES (1, 1, '2020-09-20', '2020-09-23', '2020-09-22', 6);";
+      sqlstr += "INSERT INTO locação VALUES (2, 2, '2020-09-21', '2020-09-24', '2020-09-25', 8);";
+      sqlstr += "INSERT INTO locação VALUES (4, 2, '2020-09-21', '2020-09-24', '2020-09-25', 8);";
+      sqlstr += "INSERT INTO locação VALUES (3, 2, '2020-09-23', '2020-09-26', '2020-09-24', 6);";
+      sqlstr += "INSERT INTO locação VALUES (10, 3, '2020-10-01', '2020-10-04', '2020-10-04', 6);";
+      sqlstr += "INSERT INTO locação VALUES (7, 5, '2020-10-01', '2020-10-03', '2020-10-03', 6);";
+      sqlstr += "INSERT INTO locação VALUES (11, 2, '2020-10-03', '2020-10-07', '2020-10-04', 6);";
+      sqlstr += "INSERT INTO locação VALUES (8, 3, '2020-10-04', '2020-11-18', '', '');";
+      sqlstr += "INSERT INTO locação VALUES (9, 4, '2020-10-07', '2020-10-10', '2020-10-09', 6);";
+      sqlstr += "INSERT INTO locação VALUES (4, 4, '2020-10-10', '2020-10-13', '2020-10-20', 15);";
+      sqlstr += "INSERT INTO locação VALUES (6, 2, '2021-03-08', '2021-03-09', '2021-03-09', 8);";
+      sqlstr += "CREATE TABLE filme (IDFilme, Título, Gênero, Diretor, País, Ano);";
+      sqlstr += "INSERT INTO filme VALUES (1, 'Toy Story', 'Animação', 'John Lasseter', 'EUA', 1995);";
+      sqlstr += "INSERT INTO filme VALUES (2, 'Roma', 'Drama', 'Alfonso Cuarón', 'México', 2018);";
+      sqlstr += "INSERT INTO filme VALUES (3, 'Titanic', 'Romance', 'James Cameron', 'EUA', 1998);";
+      sqlstr += "INSERT INTO filme VALUES (4, 'A Noviça Rebelde', 'Musical', 'Robert Wise', 'EUA', 1965);";
+      sqlstr += "INSERT INTO filme VALUES (5, 'O Amor Não Tira Férias', 'Romance', 'Nancy Meyers', 'EUA', 2006);";
+      sqlstr += "INSERT INTO filme VALUES (6, 'Velozes e Furiosos', 'Ação', 'Rob Cohen', 'EUA', 2001);";
+      sqlstr += "INSERT INTO filme VALUES (7, 'O Resgate do Soldado Ryan', 'Ação', 'Steven Spielberg', 'EUA', 1998);";
+      sqlstr += "INSERT INTO filme VALUES (8, 'Cidade de Deus', 'Drama', 'Fernando Meirelles', 'Brasil', 2002);";
+      table_names = ['cliente', 'DVD', 'locação', 'filme'];
       break;
     case 'family_null':
       sqlstr = "CREATE TABLE family_members (id int, name char, gender char, species char, favorite_book char);";
