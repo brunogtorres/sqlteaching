@@ -234,7 +234,7 @@ var levels = [{'name': 'SELECT',
                'short_name': 'countavgmaxmin',
                'database_type': 'locadora',
                'answer': {'columns': ['COUNT(Valor)', 'AVG(Valor)', 'MAX(Valor)', 'MIN(Valor)'],
-                          'values': [[67, 9, 15, 6]]},
+                          'values': [[9, 6.7, 15, 6]]},
                'prompt': 'We can use the <code>MAX</code> and <code>MIN</code> to find the maximum or minimum value of a table. <br/><br/>To find the least number of legs in a family member (<em>2</em>), you can run <br/><code>SELECT MIN(num_legs) FROM family_members;</code> <br/><br/>Can you find the highest num_books_read that a family member makes?'},
 
               {'name': 'COUNT *',
@@ -441,7 +441,7 @@ var load_database = function(db_type) {
       sqlstr += "INSERT INTO locação VALUES (10, 3, '2020-10-01', '2020-10-04', '2020-10-04', 6);";
       sqlstr += "INSERT INTO locação VALUES (7, 5, '2020-10-01', '2020-10-03', '2020-10-03', 6);";
       sqlstr += "INSERT INTO locação VALUES (11, 2, '2020-10-03', '2020-10-07', '2020-10-04', 6);";
-      sqlstr += "INSERT INTO locação VALUES (8, 3, '2020-10-04', '2020-11-18', '', '');";
+      sqlstr += "INSERT INTO locação VALUES (8, 3, '2020-10-04', '2020-11-18', , );";
       sqlstr += "INSERT INTO locação VALUES (9, 4, '2020-10-07', '2020-10-10', '2020-10-09', 6);";
       sqlstr += "INSERT INTO locação VALUES (4, 4, '2020-10-10', '2020-10-13', '2020-10-21', 15);";
       sqlstr += "INSERT INTO locação VALUES (6, 2, '2021-03-08', '2021-03-09', '2021-03-09', 8);";
