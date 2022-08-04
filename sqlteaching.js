@@ -272,120 +272,18 @@ var levels = [{'name': 'SELECT',
                'short_name': 'orderby',
                'database_type': 'vendacarros',
                'answer': {'columns': ['Média', 'Modelo', 'Ano'],
-                          'values': [[50000, 'Meriva', 2017],
-                                     [45000, 'Punto', 2019]]},
+                          'values': [[45000, 'Punto', 2019],
+                                     [50000, 'Meriva', 2017]]},
                'prompt': 'Different parts of information can be stored in different tables, and in order to put them together, we use <code>INNER JOIN ... ON</code>. Joining tables gets to the core of SQL functionality, but it can get very complicated. We will start with a simple example, and will start with an <code>INNER JOIN</code>.<br/><br/>As you can see below, there are 3 tables:<br/><strong>character</strong>: Each character is a row and is represented by a unique identifier (<em>id</em>), e.g. 1 is Doogie Howser<br/><strong>character_tv_show:</strong> For each character, which show is he/she in?<br/><strong>character_actor</strong>: For each character, who is the actor?<br/><br/>See that in <strong>character_tv_show</strong>, instead of storing both the character and TV show names (e.g. Willow Rosenberg and Buffy the Vampire Slayer), it stores the <em>character_id</em> as a substitute for the character name. This <em>character_id</em> refers to the matching <em>id</em> row from the <strong>character</strong> table. <br/><br/>This is done so data is not duplicated.  For example, if the name of a character were to change, you would only have to change the name of the character in one row. <br/><br/>This allows us to "join" the tables together "on" that reference/common column. <br/><br/>To get each character name with his/her TV show name, we can write <br/><code>SELECT character.name, character_tv_show.tv_show_name<br/> FROM character <br/>INNER JOIN character_tv_show<br/> ON character.id = character_tv_show.character_id;</code><br/>This puts together every row in <strong>character</strong> with the corresponding row in <strong>character_tv_show</strong>, or vice versa.<br/><br/>Note:<br/>- We use the syntax <strong>table_name</strong>.<em>column_name</em>. If we only used <em>column_name</em>, SQL might incorrectly assume which table it is coming from.<br/> - The example query above is written over multiple lines for readability, but that does not affect the query. <br/><br/>Can you use an inner join to pair each character name with the actor who plays them?  Select the columns: <strong>character</strong>.<em>name</em>, <strong>character_actor</strong>.<em>actor_name</em>'},
 
-              {'name': 'Multiple joins',
-               'short_name': 'multiple_joins',
-               'database_type': 'tv_normalized',
-               'answer': {'columns': ['name', 'name'],
-                          'values': [['Doogie Howser', 'Neil Patrick Harris'],
-                                     ['Barney Stinson', 'Neil Patrick Harris'],
-                                     ['Lily Aldrin', 'Alyson Hannigan'],
-                                     ['Willow Rosenberg', 'Alyson Hannigan']]},
+              {'name': 'SELECT Contas',
+               'short_name': 'selectcontas',
+               'database_type': 'vendedores',
+               'answer': {'columns': ['IDVendedor', 'Total'],
+                          'values': [[1, 2500],
+                                     [2, 2600]]},
                'prompt': 'In the previous exercise, we explained that TV show character names were not duplicated, so if the name of a character were to change, you would only have to change the name of the character in one row. <br/><br/>However, the previous example was a bit artificial because the TV show names and actor names were duplicated. <br/><br/>In order to not duplicate any names, we need to have more tables, and use multiple joins. <br/><br/>We have tables for characters, TV shows, and actors.  Those tables represent things (also known as entities). <br/><br/>In addition those tables, we have the relationship tables <strong>character_tv_show</strong> and <strong>character_actor</strong>, which capture the relationship between two entities. <br/><br/>This is a flexible way of capturing the relationship between different entities, as some TV show characters might be in multiple shows, and some actors are known for playing multiple characters. <br/><br/>To get each character name with his/her TV show name, we can write <br/><code>SELECT character.name, tv_show.name<br/> FROM character <br/>INNER JOIN character_tv_show<br/> ON character.id = character_tv_show.character_id<br/>INNER JOIN tv_show<br/> ON character_tv_show.tv_show_id = tv_show.id;</code><br/><br/>Can you use two joins to pair each character name with the actor who plays them?  Select the columns: <strong>character</strong>.<em>name</em>, <strong>actor</strong>.<em>name</em>'},
 
-              {'name': 'Joins with WHERE',
-               'short_name': 'joins_with_where',
-               'required': ['Willow Rosenberg', 'How I Met Your Mother'],
-               'custom_error_message': 'You must check that the characters are not named "Willow Rosenberg" and not in the show "How I Met Your Mother".',
-               'database_type': 'tv_normalized',
-               'answer': {'columns': ['name', 'name'],
-                          'values': [['Doogie Howser', 'Doogie Howser, M.D.']]},
-               'prompt': 'You can also use joins with the <code>WHERE</code> clause. <br/><br/> To get a list of characters and TV shows that are not in "Buffy the Vampire Slayer" and are not Barney Stinson, you would run: <br/> <code>SELECT character.name, tv_show.name<br/> FROM character <br/>INNER JOIN character_tv_show<br/> ON character.id = character_tv_show.character_id<br/>INNER JOIN tv_show<br/> ON character_tv_show.tv_show_id = tv_show.id WHERE character.name != \'Barney Stinson\' AND tv_show.name != \'Buffy the Vampire Slayer\';</code> <br/><br/>Can you return a list of characters and TV shows that are not named "Willow Rosenberg" and not in the show "How I Met Your Mother"?'},
-
-              {'name': 'Left joins',
-               'short_name': 'left_joins',
-               'database_type': 'tv_extra',
-               'answer': {'columns': ['name', 'name'],
-                          'values': [['Doogie Howser', 'Neil Patrick Harris'],
-                                     ['Barney Stinson', 'Neil Patrick Harris'],
-                                     ['Lily Aldrin', 'Alyson Hannigan'],
-                                     ['Willow Rosenberg', 'Alyson Hannigan'],
-                                     ['Steve Urkel', null],
-                                     ['Homer Simpson', null]]},
-               'prompt': 'In the previous exercise, we used joins to match up TV character names with their actors.  When you use <code>INNER JOIN</code>, that is called an "inner join" because it only returns rows where there is data for both the character name and the actor. <br/><br/> However, perhaps you want to get all of the character names, even if there isn\'t corresponding data for the name of the actor.  A <code>LEFT JOIN</code> returns all of the data from the first (or "left") table, and if there isn\'t corresponding data for the second table, it returns <code>NULL</code> for those columns. <br/><br/> Using left joins between character names and TV shows would look like this: <br/><code>SELECT character.name, tv_show.name<br/> FROM character <br/>LEFT JOIN character_tv_show<br/> ON character.id = character_tv_show.character_id<br/> LEFT JOIN tv_show<br/> ON character_tv_show.tv_show_id = tv_show.id;</code> <br/><br/> Can you use left joins to match character names with the actors that play them?  Select the columns: <strong>character</strong>.<em>name</em>, <strong>actor</strong>.<em>name</em> <br/><br/>Note: Other variants of SQL have <code>RIGHT JOIN</code> and <code>OUTER JOIN</code>, but those features are not present in SQLite.'},
-
-              {'name': 'Table alias',
-               'short_name': 'table_alias',
-               'required': ['AS', 'c.name', 'a.name'],
-               'custom_error_message': 'You must use table aliases as described above.',
-               'database_type': 'tv_extra',
-               'answer': {'columns': ['name', 'name'],
-                          'values': [['Doogie Howser', 'Neil Patrick Harris'],
-                                     ['Barney Stinson', 'Neil Patrick Harris'],
-                                     ['Lily Aldrin', 'Alyson Hannigan'],
-                                     ['Willow Rosenberg', 'Alyson Hannigan'],
-                                     ['Steve Urkel', null],
-                                     ['Homer Simpson', null]]},
-               'prompt': 'These queries are starting to get pretty long! <br/><br/>In the previous exercise, we ran a query containing the tables <strong>character</strong>, <strong>tv_show</strong>, and <strong>character_tv_show</strong>.  We can write a shorter query if we used aliases for those tables.  Basically, we create a "nickname" for that table. <br/><br/> If you want to use an alias for a table, you add <code>AS *alias_name*</code> after the table name. <br/><br/> For example, to use left joins between characters and tv shows with aliases, you would run: <br/> <code>SELECT c.name, t.name<br/>FROM character AS c<br/>LEFT JOIN character_tv_show AS ct<br/>ON c.id = ct.character_id<br/>LEFT JOIN tv_show AS t<br/>ON ct.tv_show_id = t.id;</code> <br/><br/> As you can see, it is shorter than the query in the previous exercise.<br/><br/> Can you use left joins to match character names with the actors that play them, and use aliases to make the query shorter?  The aliases for <strong>character</strong>, <strong>character_actor</strong>, and <strong>actor</strong> should be <strong>c</strong>, <strong>ca</strong>, and <strong>a</strong>. <br/><br/>Select the columns: <strong>c</strong>.<em>name</em>, <strong>a</strong>.<em>name</em>'},
-
-              {'name': 'Column alias',
-               'short_name': 'column_alias',
-               'database_type': 'tv_extra',
-               'answer': {'columns': ['character', 'actor'],
-                          'values': [['Doogie Howser', 'Neil Patrick Harris'],
-                                     ['Barney Stinson', 'Neil Patrick Harris'],
-                                     ['Lily Aldrin', 'Alyson Hannigan'],
-                                     ['Willow Rosenberg', 'Alyson Hannigan'],
-                                     ['Steve Urkel', null],
-                                     ['Homer Simpson', null]]},
-               'prompt': 'In addition to making aliases for tables, you can also make them for columns. <br/><br/>  This clears up confusion on which column is which.  In the previous exercise, both columns in the result are simply called "name", and that can be confusing. <br/><br/> If you want to use an alias for a column, you add <code>AS *alias_name*</code> after the column name. <br/><br/>  If we wanted to use left joins between character names and TV shows and clearly denote which column has character names, and which has TV show names, it would look like this: <br/><code>SELECT character.name AS character, tv_show.name AS name<br/> FROM character <br/>LEFT JOIN character_tv_show<br/> ON character.id = character_tv_show.character_id<br/> LEFT JOIN tv_show<br/> ON character_tv_show.tv_show_id = tv_show.id;</code> <br/><br/>Can you use left joins to match character names with the actors that play them, and use aliases to call the two columns returned <em>character</em> and <em>actor</em>?'},
-
-              {'name': 'Self joins',
-               'short_name': 'self_join',
-               'database_type': 'self_join',
-               'answer': {'columns': ['employee_name', 'boss_name'],
-                        'values': [['Patrick Smith', 'Abigail Reed'],
-                                   ['Abigail Reed', 'Bob Carey'],
-                                   ['Bob Carey', 'Maxine Tang']]},
-               'prompt': 'Sometimes, it may make sense for you to do a self join.  In that case, you need to use table aliases to determine which data is from the "first"/"left" table. <br/><br/>For example, to get a list of Rock Paper Scissors objects and the objects they beat, you can run the following: <br/><code>SELECT r1.name AS object, r2.name AS beats <br/>FROM rps AS r1 <br/>INNER JOIN rps AS r2 <br/>ON r1.defeats_id = r2.id;</code><br/><br/> Can you run a query that returns the name of an employee and the name of their boss?  Use column aliases to make the columns <em>employee_name</em> and <em>boss_name</em>.'},
-
-              {'name': 'LIKE',
-               'short_name': 'like',
-               'database_type': 'robot',
-               'answer': {'columns': ['id', 'name'],
-                          'values': [[1, 'Robot 2000'],
-                                     [2, 'Champion Robot 2001'],
-                                     [4, 'Turbo Robot 2002'],
-                                     [5, 'Super Robot 2003'],
-                                     [6, 'Super Turbo Robot 2004']]},
-               'prompt': 'In SQL, you can use the <code>LIKE</code> command in order to search through text-based values.  With <code>LIKE</code>, there are two special characters: <code>%</code> and <code>_</code>. <br/><br/> The percent sign (<code>%</code>) represents zero, one, or multiple characters. <br/><br/> The underscore (<code>_</code>) represents one character. <br/><br/> For example, <code>LIKE "SUPER _"</code> would match values such as "SUPER 1", "SUPER A", and "SUPER Z". <br/><br/> <code>LIKE "SUPER%"</code> would match any value where <code>SUPER</code> is at the beginning, such as "SUPER CAT", "SUPER 123", or even "SUPER" by itself. <br/><br/> <code>SELECT * FROM robots WHERE name LIKE "%Robot%";</code> would yield all values that contain "Robot" in the name.  Can you run a query that returns "Robot" followed by a year between 2000 and 2099? (So 2015 is a valid value at the end, but 2123 is not.) <br/><br/> Note: <code>LIKE</code> queries are <strong>not</strong> case sensitive.'},
-
-              {'name': 'CASE',
-               'short_name': 'case',
-               'database_type': 'friends_of_pickles',
-               'answer': {'columns': ['id', 'name', 'gender', 'species', 'height_cm', 'sound'],
-                          'values': [[1, 'Dave', 'male', 'human', 180, 'talk'],
-                                     [2, 'Mary', 'female', 'human', 160, 'talk'],
-                                     [3, 'Fry', 'male', 'cat', 30, 'meow'],
-                                     [4, 'Leela', 'female', 'cat', 25, 'meow'],
-                                     [5, 'Odie', 'male', 'dog', 40, 'bark'],
-                                     [6, 'Jumpy', 'male', 'dog', 35, 'bark'],
-                                     [7, 'Sneakers', 'male', 'dog', 55, 'bark']]},
-               'prompt': 'You can use a <code>CASE</code> statement to return certain values when certain scenarios are true. <br/><br/> A <code>CASE</code> statement takes the following form: <br/><br/> <code>CASE WHEN *first thing is true* THEN *value1*<br/>WHEN *second thing is true* THEN *value2*<br/>...<br/>ELSE *value for all other situations* <br/> END </code> <br/><br/> For example, in order to return the number of legs for each row in <strong>friends_of_pickles</strong>, you could run: <br/> <code>SELECT *, <br/> CASE WHEN species = \'human\' THEN 2 ELSE 4 END AS num_legs <br/> FROM friends_of_pickles;</code><br/><br/> Can you return the results with a column named <em>sound</em> that returns "talk" for humans, "bark" for dogs, and "meow" for cats?'},
-
-              {'name': 'SUBSTR',
-               'short_name': 'substr',
-               'database_type': 'robot_code',
-               'answer': {'columns': ['id', 'name', 'location'],
-                          'values': [[1, 'R2000 - Robot 2000', 'New City, NY'],
-                                     [3, 'D0001 - Dragon', 'New York City, NY'],
-                                     [4, 'R2002 - Turbo Robot 2002', 'Spring Valley, NY'],
-                                     [5, 'R2003 - Super Robot 2003', 'Nyack, NY'],
-                                     [8, 'U2111 - Unreleased Turbo Robot 2111', 'Buffalo, NY']]},
-               'prompt': 'In SQL, you can search for the substring of a given value.  Perhaps a location is stored in the format "city, state" and you just want to grab the state. <br/><br/> SUBSTR is used in this format: <code>SUBSTR(<em>column_name</em>, <em>index</em>, <em>number_of_characters</em>)</code> <br/><br/> <em>index</em> is a number that denotes where you would start the substring.  1 would indicate the first character, 2 would indicated the second character, etc.  The index could also be negative, which means you would count from the end of the string.  -1 would denote the last character, -2 would denote the 2nd to last character, etc. <br/><br/> <em>number_of_characters</em> is optional; if it is not included, the substring contains the "rest of the string". <br/><br/>Here are some examples:<br/> <code>SUBSTR(name, 1, 5)</code> is the first 5 characters of the name. <br/> <code>SUBSTR(name, -4)</code> is the last 4 characters of the name. <br/><br/><code>SELECT * FROM robots WHERE SUBSTR(name, -4) LIKE \'20__\';</code> is another way of returning all of the robots that have been released between 2000 and 2099.<br/><br/>Note: In other versions of SQL, you could use <code>RIGHT</code> to do this.<br/><br/> Can you return all of the robots that are located in NY?'},
-
-              {'name': 'COALESCE',
-               'short_name': 'coalesce',
-               'database_type': 'fighting',
-               'answer': {'columns': ['name', 'weapon'],
-                          'values': [['US Marine', 'M1A1 Abrams Tank'],
-                                     ['John Wilkes Booth', '.44 caliber Derringer'],
-                                     ['Zorro', 'Sword of Zorro'],
-                                     ['Innocent Bystander', null]]},
-               'prompt': '<code>COALESCE</code> takes a list of columns, and returns the value of the first column that is not null. <br/><br/>Suppose we wanted to find the most powerful weapon that a combatant has on hand.  If value of <em>gun</em> is not null, that is the value returned.  Otherwise, the value of <em>sword</em> is returned.  Then you would run: <br/> <code>SELECT name, COALESCE(gun, sword) AS weapon FROM fighters;</code> <br/><br/> Suppose that a fighter\'s tank could count as a weapon, and it would take precedence over the gun and the sword.  Could you find each fighter\'s weapon in that scenario?'}
               ];
 
 
@@ -454,136 +352,26 @@ var load_database = function(db_type) {
       sqlstr += "INSERT INTO filme VALUES (8, 'Cidade de Deus', 'Drama', 'Fernando Meirelles', 'Brasil', 2002);";
       table_names = ['cliente', 'DVD', 'locação', 'filme'];
       break;
-    case 'family_null':
-      sqlstr = "CREATE TABLE family_members (id int, name char, gender char, species char, favorite_book char);";
-      sqlstr += "INSERT INTO family_members VALUES (1, 'Dave', 'male', 'human', 'To Kill a Mockingbird');";
-      sqlstr += "INSERT INTO family_members VALUES (2, 'Mary', 'female', 'human', 'Gone with the Wind');";
-      sqlstr += "INSERT INTO family_members VALUES (3, 'Pickles', 'male', 'dog', NULL);";
-      table_names = ['family_members'];
-      break;
-    case 'celebs_born':
-      sqlstr = "CREATE TABLE celebs_born (id int, name char, birthdate date);";
-      sqlstr += "INSERT INTO celebs_born VALUES (1, 'Michael Jordan', '1963-02-17');";
-      sqlstr += "INSERT INTO celebs_born VALUES (2, 'Justin Timberlake', '1981-01-31');";
-      sqlstr += "INSERT INTO celebs_born VALUES (3, 'Taylor Swift', '1989-12-13');";
-      table_names = ['celebs_born'];
-      break;
-    case 'tv':
-      sqlstr = "CREATE TABLE character (id int, name char);";
-      sqlstr += "INSERT INTO character VALUES (1, 'Doogie Howser');";
-      sqlstr += "INSERT INTO character VALUES (2, 'Barney Stinson');";
-      sqlstr += "INSERT INTO character VALUES (3, 'Lily Aldrin');";
-      sqlstr += "INSERT INTO character VALUES (4, 'Willow Rosenberg');";
-      sqlstr += "CREATE TABLE character_tv_show (id int, character_id int, tv_show_name char);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (1, 4, 'Buffy the Vampire Slayer');";
-      sqlstr += "INSERT INTO character_tv_show VALUES (2, 3, 'How I Met Your Mother');";
-      sqlstr += "INSERT INTO character_tv_show VALUES (3, 2, 'How I Met Your Mother');";
-      sqlstr += "INSERT INTO character_tv_show VALUES (4, 1, 'Doogie Howser, M.D.');";
-      sqlstr += "CREATE TABLE character_actor (id int, character_id int, actor_name char);";
-      sqlstr += "INSERT INTO character_actor VALUES (1, 4, 'Alyson Hannigan');";
-      sqlstr += "INSERT INTO character_actor VALUES (2, 3, 'Alyson Hannigan');";
-      sqlstr += "INSERT INTO character_actor VALUES (3, 2, 'Neil Patrick Harris');";
-      sqlstr += "INSERT INTO character_actor VALUES (4, 1, 'Neil Patrick Harris');";
-      table_names = ['character', 'character_tv_show', 'character_actor'];
-      break;
-    case 'tv_normalized':
-      sqlstr = "CREATE TABLE character (id int, name char);";
-      sqlstr += "INSERT INTO character VALUES (1, 'Doogie Howser');";
-      sqlstr += "INSERT INTO character VALUES (2, 'Barney Stinson');";
-      sqlstr += "INSERT INTO character VALUES (3, 'Lily Aldrin');";
-      sqlstr += "INSERT INTO character VALUES (4, 'Willow Rosenberg');";
-      sqlstr += "CREATE TABLE tv_show (id int, name char);";
-      sqlstr += "INSERT INTO tv_show VALUES (1, 'Buffy the Vampire Slayer');";
-      sqlstr += "INSERT INTO tv_show VALUES (2, 'How I Met Your Mother');";
-      sqlstr += "INSERT INTO tv_show VALUES (3, 'Doogie Howser, M.D.');";
-      sqlstr += "CREATE TABLE character_tv_show (id int, character_id int, tv_show_id int);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (1, 1, 3);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (2, 2, 2);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (3, 3, 2);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (4, 4, 1);";
-      sqlstr += "CREATE TABLE actor (id int, name char);";
-      sqlstr += "INSERT INTO actor VALUES (1, 'Alyson Hannigan');";
-      sqlstr += "INSERT INTO actor VALUES (2, 'Neil Patrick Harris');";
-      sqlstr += "CREATE TABLE character_actor (id int, character_id int, actor_id int);";
-      sqlstr += "INSERT INTO character_actor VALUES (1, 1, 2);";
-      sqlstr += "INSERT INTO character_actor VALUES (2, 2, 2);";
-      sqlstr += "INSERT INTO character_actor VALUES (3, 3, 1);";
-      sqlstr += "INSERT INTO character_actor VALUES (4, 4, 1);";
-      table_names = ['character', 'tv_show', 'character_tv_show', 'actor', 'character_actor'];
-      break;
-    case 'tv_extra':
-      sqlstr = "CREATE TABLE character (id int, name char);";
-      sqlstr += "INSERT INTO character VALUES (1, 'Doogie Howser');";
-      sqlstr += "INSERT INTO character VALUES (2, 'Barney Stinson');";
-      sqlstr += "INSERT INTO character VALUES (3, 'Lily Aldrin');";
-      sqlstr += "INSERT INTO character VALUES (4, 'Willow Rosenberg');";
-      sqlstr += "INSERT INTO character VALUES (5, 'Steve Urkel');";
-      sqlstr += "INSERT INTO character VALUES (6, 'Homer Simpson');";
-      sqlstr += "CREATE TABLE tv_show (id int, name char);";
-      sqlstr += "INSERT INTO tv_show VALUES (1, 'Buffy the Vampire Slayer');";
-      sqlstr += "INSERT INTO tv_show VALUES (2, 'How I Met Your Mother');";
-      sqlstr += "INSERT INTO tv_show VALUES (3, 'Doogie Howser, M.D.');";
-      sqlstr += "INSERT INTO tv_show VALUES (4, 'Friends');";
-      sqlstr += "CREATE TABLE character_tv_show (id int, character_id int, tv_show_id int);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (1, 1, 3);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (2, 2, 2);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (3, 3, 2);";
-      sqlstr += "INSERT INTO character_tv_show VALUES (4, 4, 1);";
-      sqlstr += "CREATE TABLE actor (id int, name char);";
-      sqlstr += "INSERT INTO actor VALUES (1, 'Alyson Hannigan');";
-      sqlstr += "INSERT INTO actor VALUES (2, 'Neil Patrick Harris');";
-      sqlstr += "INSERT INTO actor VALUES (3, 'Adam Sandler');";
-      sqlstr += "INSERT INTO actor VALUES (4, 'Steve Carell');";
-      sqlstr += "CREATE TABLE character_actor (id int, character_id int, actor_id int);";
-      sqlstr += "INSERT INTO character_actor VALUES (1, 1, 2);";
-      sqlstr += "INSERT INTO character_actor VALUES (2, 2, 2);";
-      sqlstr += "INSERT INTO character_actor VALUES (3, 3, 1);";
-      sqlstr += "INSERT INTO character_actor VALUES (4, 4, 1);";
-      table_names = ['character', 'tv_show', 'character_tv_show', 'actor', 'character_actor'];
-      break;
-    case 'self_join':
-      sqlstr = "CREATE TABLE rps (id int, name char, defeats_id int);";
-      sqlstr += "INSERT INTO rps VALUES (1, 'Rock', 3);";
-      sqlstr += "INSERT INTO rps VALUES (2, 'Paper', 1);";
-      sqlstr += "INSERT INTO rps VALUES (3, 'Scissors', 2);";
-      sqlstr += "CREATE TABLE employees (id int, name char, title char, boss_id int);";
-      sqlstr += "INSERT INTO employees VALUES (1, 'Patrick Smith', 'Software Engineer', 2);";
-      sqlstr += "INSERT INTO employees VALUES (2, 'Abigail Reed', 'Engineering Manager', 3);";
-      sqlstr += "INSERT INTO employees VALUES (3, 'Bob Carey', 'Director of Engineering', 4);";
-      sqlstr += "INSERT INTO employees VALUES (4, 'Maxine Tang', 'CEO', null);";
-      table_names = ['rps', 'employees'];
-      break;
-    case 'robot':
-      sqlstr = "CREATE TABLE robots (id int, name char);";
-      sqlstr += "INSERT INTO robots VALUES (1, 'Robot 2000');";
-      sqlstr += "INSERT INTO robots VALUES (2, 'Champion Robot 2001');";
-      sqlstr += "INSERT INTO robots VALUES (3, 'Dragon');";
-      sqlstr += "INSERT INTO robots VALUES (4, 'Turbo Robot 2002');";
-      sqlstr += "INSERT INTO robots VALUES (5, 'Super Robot 2003');";
-      sqlstr += "INSERT INTO robots VALUES (6, 'Super Turbo Robot 2004');";
-      sqlstr += "INSERT INTO robots VALUES (7, 'Not A Robot');";
-      sqlstr += "INSERT INTO robots VALUES (8, 'Unreleased Turbo Robot 2111');";
-      table_names = ['robots'];
-      break;
-    case 'robot_code':
-      sqlstr = "CREATE TABLE robots (id int, name char, location char);";
-      sqlstr += "INSERT INTO robots VALUES (1, 'R2000 - Robot 2000', 'New City, NY');";
-      sqlstr += "INSERT INTO robots VALUES (2, 'R2001 - Champion Robot 2001', 'Palo Alto, CA');";
-      sqlstr += "INSERT INTO robots VALUES (3, 'D0001 - Dragon', 'New York City, NY');";
-      sqlstr += "INSERT INTO robots VALUES (4, 'R2002 - Turbo Robot 2002', 'Spring Valley, NY');";
-      sqlstr += "INSERT INTO robots VALUES (5, 'R2003 - Super Robot 2003', 'Nyack, NY');";
-      sqlstr += "INSERT INTO robots VALUES (6, 'R2004 - Super Turbo Robot 2004', 'Tampa, FL');";
-      sqlstr += "INSERT INTO robots VALUES (7, 'N0001 - Not A Robot', 'Seattle, WA');";
-      sqlstr += "INSERT INTO robots VALUES (8, 'U2111 - Unreleased Turbo Robot 2111', 'Buffalo, NY');";
-      table_names = ['robots'];
-      break;
-    case 'fighting':
-      sqlstr = "CREATE TABLE fighters (id int, name char, gun char, sword char, tank char);";
-      sqlstr += "INSERT INTO fighters VALUES (1, 'US Marine', 'Colt 9mm SMG', 'Swiss Army Knife', 'M1A1 Abrams Tank');";
-      sqlstr += "INSERT INTO fighters VALUES (2, 'John Wilkes Booth', '.44 caliber Derringer', null, null);";
-      sqlstr += "INSERT INTO fighters VALUES (3, 'Zorro', null, 'Sword of Zorro', null);";
-      sqlstr += "INSERT INTO fighters VALUES (4, 'Innocent Bystander', null, null, null);";
-      table_names = ['fighters'];
+      case 'vendedores':
+      sqlstr = "CREATE TABLE carro (Placa, Modelo, Ano, Cor);";
+      sqlstr += "INSERT INTO carro VALUES ('LLL0000', 'Palio', 2015, 'Prata');";
+      sqlstr += "INSERT INTO carro VALUES ('LKY1111', 'Punto', 2019, 'Cinza');";
+      sqlstr += "INSERT INTO carro VALUES ('LMN2222', 'Meriva', 2017, 'Branco');";
+      sqlstr += "INSERT INTO carro VALUES ('LXZ3333', 'Palio', 2017, 'Preto');";
+      sqlstr += "CREATE TABLE cliente (IDCliente, Nome, Telefone);";
+      sqlstr += "INSERT INTO cliente VALUES (1, 'Roberta', 26260000);";
+      sqlstr += "INSERT INTO cliente VALUES (2, 'André', 26101111);";
+      sqlstr += "INSERT INTO cliente VALUES (3, 'Joana', 26215850);";
+      sqlstr += "INSERT INTO cliente VALUES (4, 'Paulo', 26119620);";
+      sqlstr += "CREATE TABLE venda (IDCliente, Placa, Data, Valor, IDVendedor, Turno);";
+      sqlstr += "INSERT INTO venda VALUES (2, 'LKY1111', '2021-10-01', 45000, 1, 'Manhã');";
+      sqlstr += "INSERT INTO venda VALUES (4, 'LXZ3333', '2021-10-01', 43000, 2, 'Tarde');";
+      sqlstr += "INSERT INTO venda VALUES (1, 'LLL0000', '2021-10-02', 35000, 1, 'Manhã');";
+      sqlstr += "INSERT INTO venda VALUES (2, 'LMN2222', '2021-10-02', 50000, 2, 'Manhã');";
+      sqlstr += "CREATE TABLE vendedor (IDVendedor, Nome Vendedor, Telefone Vendedor, Comissão);";
+      sqlstr += "INSERT INTO vendedor VALUES (1, 'João das Couves', 26262626, 5);";
+      sqlstr += "INSERT INTO vendedor VALUES (2, 'Maria das Brócolis', 27272727, 7);";
+      table_names = ['carro', 'cliente', 'venda', 'vendedor'];
       break;
   }
 
